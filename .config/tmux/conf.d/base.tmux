@@ -14,7 +14,7 @@ set -g base-index 1
 setw -g pane-base-index 1
 
 # Mouse control on
-setw -g mouse on
+setw -g mouse off
 
 # renumber windows when one is closed. I don't want to have 1, 2, 4, 5 windows when I close window 3.
 set -g renumber-windows on
