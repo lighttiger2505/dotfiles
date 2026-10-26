@@ -4,7 +4,7 @@ GOBIN  = "{{env.HOME}}/go/bin"
 [settings]
 experimental = true
 go_set_gobin = false
-install_before = "7d"
+minimum_release_age = "7d"
 idiomatic_version_file_enable_tools = ["node"]
 trusted_config_paths = [
     '~/src/github.com/lighttiger2505',
