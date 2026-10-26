@@ -33,14 +33,10 @@ bind-key h select-pane -L
 bind-key j select-pane -D
 bind-key k select-pane -U
 bind-key l select-pane -R
+bind-key -n M-h select-pane -L
 bind-key -n M-j select-pane -D
 bind-key -n M-k select-pane -U
-
-# Move pane, wrapping to the adjacent window at the edge
-bind-key -n M-h run-shell "~/.config/tmux/smart_pane_move.sh left"
-bind-key -n M-l run-shell "~/.config/tmux/smart_pane_move.sh right"
-bind-key -n M-Left run-shell "~/.config/tmux/smart_pane_move.sh left"
-bind-key -n M-Right run-shell "~/.config/tmux/smart_pane_move.sh right"
+bind-key -n M-l select-pane -R
 
 # Resize pain
 bind-key H resize-pane -L 5
