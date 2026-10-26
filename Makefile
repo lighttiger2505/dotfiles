@@ -1,7 +1,9 @@
 CANDIDATES := $(wildcard .??*)
-EXCLUSIONS := .DS_Store .git .gitmodules .config .claude-private .claude-work
+EXCLUSIONS := .DS_Store .git .gitmodules .config .claude .claude-private .claude-work
 DOTFILES   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 CONFIGDIRS := $(wildcard ./.config/*)
+
+.PHONY: all list deploy linkdropbox mise-install
 
 all:
 
@@ -21,11 +23,11 @@ deploy:
 			ln -sfnv $(abspath $(val)) $(HOME)/.claude/$(notdir $(val));))
 
 linkdropbox:
-	ln -s ~/Library/CloudStorage/Dropbox/vaults ~/vaults
+	ln -sfn ~/Library/CloudStorage/Dropbox/vaults ~/vaults
 	mkdir -p ~/.config
-	ln -s ~/Library/CloudStorage/Dropbox/vimmemo ~/.config/vimmemo
+	ln -sfn ~/Library/CloudStorage/Dropbox/vimmemo ~/.config/vimmemo
 	mkdir -p ~/.config/liary
-	ln -s ~/Library/CloudStorage/Dropbox/liary/_post ~/.config/liary/_post
+	ln -sfn ~/Library/CloudStorage/Dropbox/liary/_post ~/.config/liary/_post
 
 mise-install:
-	export MISE_GITHUB_TOKEN=$(gh auth token) && mise install
+	export MISE_GITHUB_TOKEN=$$(gh auth token) && mise install
