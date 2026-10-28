@@ -164,6 +164,10 @@ run = "layout floating"
     if.app-id = 'com.google.Chrome.app.kjgfgldnnfoeklkmfkjfagphfepbbdan'
     run = 'move-node-to-workspace O'
 
+[[on-window-detected]]
+    if.app-id = 'com.lambdalisue.Arto'
+    run = 'move-node-to-workspace O'
+
 ########################################
 # Application to Mac Display
 ########################################
