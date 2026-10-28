@@ -19,6 +19,7 @@ if executable wt; then
     cached_eval wt wt config shell init zsh
 fi
 
+export DEJA_CYCLE_KEY=
 if [[ -r "$HOME/.local/share/deja/init.zsh" ]];
     then source "$HOME/.local/share/deja/init.zsh";
 else
