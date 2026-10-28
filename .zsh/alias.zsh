@@ -269,11 +269,23 @@ function github-pr-switch-fzf() {
 alias prsif=github-pr-switch-fzf
 
 github-pr-list-markdown() {
-  gh pr list \
-    --search "org:MobilityTechnologies is:open author:@me -label:dependencies sort:updated-desc" \
-    --json title,headRefName,url,headRepository,isDraft \
-    --template '{{range .}}- [{{if .isDraft}}(Draft) {{end}}{{.headRepository.name}} {{.headRefName}} {{.title}}]({{.url}})
-{{end}}'
+  # Usage: prmd [owner/repo ...]  (no args: all repos in MobilityTechnologies)
+  local scope=(--owner MobilityTechnologies)
+  if (( $# > 0 )); then
+    scope=()
+    local repo
+    for repo in "$@"; do
+      scope+=(--repo "$repo")
+    done
+  fi
+
+  gh search prs "${scope[@]}" \
+    --state open --author @me \
+    --limit 100 \
+    --json title,url,repository,isDraft,updatedAt \
+    --jq 'sort_by(.updatedAt) | reverse | sort_by([.repository.name, .isDraft])
+      | .[] | "- [\(if .isDraft then "(Draft) " else "" end)\(.repository.name) \(.title)](\(.url))"' \
+    -- -label:dependencies
 }
 alias prmd=github-pr-list-markdown
 
