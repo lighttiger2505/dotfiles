@@ -289,6 +289,39 @@ github-pr-list-markdown() {
 }
 alias prmd=github-pr-list-markdown
 
+github-pr-review-markdown() {
+  # Usage: prrevmd [owner/repo ...]  (no args: all repos in MobilityTechnologies)
+  # Only PRs where I am requested directly (team requests are excluded).
+  # gh search prs has no reviewRequests field, so use GraphQL search.
+  local scope="org:MobilityTechnologies"
+  if (( $# > 0 )); then
+    scope=""
+    local repo
+    for repo in "$@"; do
+      scope+="repo:${repo} "
+    done
+  fi
+
+  gh api graphql \
+    -f q="${scope} is:pr is:open review-requested:@me -label:dependencies" \
+    -f query='query($q: String!) {
+      search(query: $q, type: ISSUE, first: 100) {
+        nodes {
+          ... on PullRequest {
+            title url isDraft updatedAt
+            repository { name }
+            reviewRequests(first: 30) { nodes { requestedReviewer { ... on User { login } } } }
+          }
+        }
+      }
+    }' \
+    --jq '.data.search.nodes
+      | map(select(any(.reviewRequests.nodes[]; .requestedReviewer.login == "go-toshikazu-ohashi")))
+      | sort_by(.updatedAt) | reverse | sort_by([.repository.name, .isDraft])
+      | .[] | "- [\(if .isDraft then "(Draft) " else "" end)\(.repository.name) \(.title)](\(.url))"'
+}
+alias prrevmd=github-pr-review-markdown
+
 function list-copilot-models() {
     curl -s \
         -H "Authorization: Bearer $(gh auth token)" \
