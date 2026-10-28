@@ -219,6 +219,46 @@ function github-pr-review-fzf() {
 }
 alias prrevf=github-pr-review-fzf
 
+function github-pr-review-all-fzf() {
+    # Cross-repo version of prrevf: select from review-requested PRs in the org, then cd to the local repo.
+    # Only PRs where I am requested directly (team requests are excluded).
+    local selected=$(
+        gh api graphql \
+            -f q="org:MobilityTechnologies is:pr is:open review-requested:@me -label:dependencies sort:updated-desc" \
+            -f query='query($q: String!) {
+              search(query: $q, type: ISSUE, first: 100) {
+                nodes {
+                  ... on PullRequest {
+                    number title updatedAt
+                    repository { nameWithOwner }
+                    reviewRequests(first: 30) { nodes { requestedReviewer { ... on User { login } } } }
+                  }
+                }
+              }
+            }' \
+            --jq '.data.search.nodes[]
+                | select(any(.reviewRequests.nodes[]; .requestedReviewer.login == "go-toshikazu-ohashi"))
+                | "\(.number)\t\(.repository.nameWithOwner)\t\(.title)\t\(.updatedAt)"' \
+            | fzf --reverse --prompt='Select PR> '
+    )
+    [[ -z $selected ]] && return 0
+
+    local prNum=$(awk -F'\t' '{print $1}' <<<"$selected")
+    local repo=$(awk -F'\t' '{print $2}' <<<"$selected")
+    local localDir=$(get_repo_local_dir "$repo")
+    if [[ $? -ne 0 ]]; then
+        return 1
+    fi
+
+    cd "$localDir" || return 1
+    wt switch "pr:${prNum}"
+    git pull --rebase
+    local baseBranch=$(gh pr status --json baseRefName -q '.currentBranch.baseRefName')
+    git fetch origin "$baseBranch":"$baseBranch"
+    nvim -c ":OpenDiffviewPR"
+}
+alias prrevfa=github-pr-review-all-fzf
+
 function get_repo_local_dir() {
     local repo="$1"
 
@@ -231,8 +271,7 @@ function get_repo_local_dir() {
             localDir=~/src/github.com/MobilityTechnologies/kingston-static
             ;;
         *)
-            echo "Error: No local mapping for repository '$repo'" >&2
-            return 1
+            localDir=~/src/github.com/$repo
             ;;
     esac
 
