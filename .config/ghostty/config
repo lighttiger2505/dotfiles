@@ -1,7 +1,7 @@
 cursor-color = #eff1f5
 cursor-text = #4c4f69
 # cursor-invert-fg-bg = true
-# cursor-style-blink = true
+cursor-style-blink = false
 # cursor-opacity = 1
 # cursor-style = block
 
