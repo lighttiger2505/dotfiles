@@ -51,6 +51,12 @@ return {
                     conceal = false,
                 },
             },
+            anti_conceal = {
+                disabled_modes = { "n" },
+            },
+            win_options = {
+                concealcursor = { rendered = "nc" },
+            },
         },
         config = function(_, opts)
             local rm = require("render-markdown")
