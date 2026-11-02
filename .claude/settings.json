@@ -65,7 +65,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "$HOME/.claude/statusline.sh",
+    "command": ".claude/statusline.sh",
     "padding": 0
   },
   "enabledPlugins": {
