@@ -188,6 +188,20 @@ alias vimdiffpr='nvim -c ":OpenDiffviewPR"'
 
 alias prcreate='gh pr create --template "pull_request_template.md"'
 
+github-pr-checkout-same-repo() {
+  local url="$1"
+  local target current
+  target=$(printf '%s' "$url" | sed -E 's#^https://github\.com/([^/]+/[^/]+)/pull/[0-9]+.*#\1#' | tr 'A-Z' 'a-z')
+  current=$(gh repo view --json nameWithOwner -q .nameWithOwner | tr 'A-Z' 'a-z')
+  if [ "$target" = "$current" ]; then
+    gh pr checkout "$url"
+  else
+    echo "別リポジトリのPRです: $target（現在: $current）" >&2
+    return 1
+  fi
+}
+alias prco=github-pr-checkout-same-repo
+
 # Create PR diff and review by AI
 function ai-review-github-pr() {
     local tmpfile="/tmp/pr-diff-$(date +%s)"
