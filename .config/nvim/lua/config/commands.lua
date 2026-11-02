@@ -235,3 +235,26 @@ vim.api.nvim_create_user_command("LiaryEdit", function()
     end)
 end, {})
 vim.keymap.set("n", "<Leader><Leader>d", "<cmd>LiaryEdit<CR>")
+
+-- Yank the URL part of the markdown link `[text](url)` under the cursor.
+local function yank_markdown_link_url()
+    local line = vim.api.nvim_get_current_line()
+    local col = vim.api.nvim_win_get_cursor(0)[2] + 1
+
+    local init = 1
+    while true do
+        local s, e, url = line:find("%[[^%]]*%]%(([^)]*)%)", init)
+        if not s then
+            break
+        end
+        if col >= s and col <= e then
+            vim.fn.setreg(vim.v.register, url)
+            vim.notify("Yanked: " .. url, vim.log.levels.INFO)
+            return
+        end
+        init = e + 1
+    end
+    vim.notify("No markdown link under cursor", vim.log.levels.WARN)
+end
+
+vim.keymap.set("n", "yx", yank_markdown_link_url, { silent = true, desc = "Yank markdown link URL" })
