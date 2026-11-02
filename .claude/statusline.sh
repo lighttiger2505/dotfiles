@@ -3,7 +3,7 @@
 
 input=$(cat)
 
-IFS=$'\x1f' read -r model context_pct workspace cost rate_5h rate_7d resets_at_5h resets_at_7d total_in total_out \
+IFS=$'\x1f' read -r model context_pct workspace cost rate_5h rate_7d resets_at_5h resets_at_7d total_in total_out session_name \
   <<< "$(echo "$input" | jq -r '[
     (.model.display_name // "Unknown"),
     (.context_window.used_percentage // 0),
@@ -14,8 +14,9 @@ IFS=$'\x1f' read -r model context_pct workspace cost rate_5h rate_7d resets_at_5
     (.rate_limits.five_hour.resets_at // ""),
     (.rate_limits.seven_day.resets_at // ""),
     (.context_window.total_input_tokens // ""),
-    (.context_window.total_output_tokens // "")
-  ] | join("")' 2>/dev/null)"
+    (.context_window.total_output_tokens // ""),
+    (.session_name // "" | if length > 60 then .[0:59] + "…" else . end)
+  ] | join("\u001f")' 2>/dev/null)"
 
 # Catppuccin Mocha palette (truecolor)
 LAVENDER="\033[38;2;180;190;254m"
@@ -56,7 +57,30 @@ format_rate() {
 }
 
 ws_name="--"
-[[ -n "$workspace" ]] && ws_name=$(basename "$workspace")
+branch_label="Branch"
+branch_icon="🌿"
+if [[ -n "$workspace" ]]; then
+  origin_url=$(git -C "$workspace" remote get-url origin 2>/dev/null)
+  { read -r git_dir; read -r common_dir; } < <(git -C "$workspace" rev-parse --git-dir --git-common-dir 2>/dev/null)
+  # --git-common-dir may be relative depending on the cwd, so normalize with cd && pwd -P
+  # (--path-format=absolute requires git 2.31+).
+  [[ -n "$git_dir" ]] && git_dir=$(cd "$workspace" 2>/dev/null && cd "$git_dir" 2>/dev/null && pwd -P)
+  [[ -n "$common_dir" ]] && common_dir=$(cd "$workspace" 2>/dev/null && cd "$common_dir" 2>/dev/null && pwd -P)
+
+  if [[ -n "$origin_url" ]]; then
+    ws_name=$(basename "$origin_url" .git)
+  elif [[ -n "$common_dir" ]]; then
+    ws_name=$(basename "$(dirname "$common_dir")")
+  else
+    ws_name=$(basename "$workspace")
+  fi
+
+  if [[ -n "$git_dir" && -n "$common_dir" && "$git_dir" != "$common_dir" ]]; then
+    branch_label="Worktree"
+    branch_icon="🌳"
+  fi
+fi
+
 branch=$(git -C "$workspace" branch --show-current 2>/dev/null || echo "--")
 branch="${branch:-"--"}"
 
@@ -91,5 +115,8 @@ fi
 
 cost_display=$(printf '$%.2f' "$cost")
 
-echo -e "${LAVENDER}🤖Model:${model}${RESET} ${SUBTEXT0}▸${RESET} ${TEXT}📁WorkSpace:${ws_name}${RESET} ${SUBTEXT0}▸${RESET} ${TEAL}🌿Branch:${branch}${RESET}"
+session_name="${session_name:-"--"}"
+
+echo -e "${TEXT}📝Session:${session_name}${RESET}"
+echo -e "${LAVENDER}🤖Model:${model}${RESET} ${SUBTEXT0}▸${RESET} ${TEXT}📦Repository:${ws_name}${RESET} ${SUBTEXT0}▸${RESET} ${TEAL}${branch_icon}${branch_label}:${branch}${RESET}"
 echo -e "${TEXT}🪣Context:${RESET} ${BAR_COLOR}${bar}${RESET} ${TEXT}${context_int}%${RESET}${ctx_tokens_display} ${SUBTEXT0}▸${RESET} 🔶5h: ${rate_5h_display} ${SUBTEXT0}▸${RESET} 🔴7d: ${rate_7d_display} ${SUBTEXT0}▸${RESET} ${PEACH}💰Cost:${cost_display}${RESET}"
