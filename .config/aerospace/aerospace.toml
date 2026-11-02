@@ -21,10 +21,10 @@ enable-normalization-opposite-orientation-for-nested-containers = false
 # show monitor list command `aerospace list-monitors`
 ########################################
 after-startup-command = [
-  "workspace A",
+  "workspace C",
   "workspace M",
   "workspace O",
-  "move-workspace-to-monitor A Built-in Retina Display",
+  "move-workspace-to-monitor C Built-in Retina Display",
   "move-workspace-to-monitor M XV282K KV",
   "move-workspace-to-monitor O LG ULTRAWIDE"
 ]
@@ -88,7 +88,7 @@ after-startup-command = [
 
     alt-cmd-m = 'workspace M'
     alt-cmd-o = 'workspace O'
-    alt-cmd-a = 'workspace A'
+    alt-cmd-a = 'workspace C'
 
     alt-cmd-shift-1 = 'move-node-to-workspace 1'
     alt-cmd-shift-2 = 'move-node-to-workspace 2'
@@ -103,7 +103,7 @@ after-startup-command = [
 
     alt-cmd-shift-m = 'move-node-to-workspace M'
     alt-cmd-shift-o = 'move-node-to-workspace O'
-    alt-cmd-shift-a = 'move-node-to-workspace A'
+    alt-cmd-shift-a = 'move-node-to-workspace C'
 
     alt-cmd-shift-c = 'reload-config'
 
@@ -146,22 +146,17 @@ if.app-id = "com.apple.finder"
 run = "layout floating"
 
 ########################################
-# Application to main window workspace
+# Application to terminal workspace
 ########################################
 [[on-window-detected]]
     if.app-id = 'com.mitchellh.ghostty'
     run = 'move-node-to-workspace M'
 
 ########################################
-# Application to Sub Windown workspace
+# Application to reference workspace
 ########################################
 [[on-window-detected]]
     if.app-id = 'com.google.Chrome'
-    run = 'move-node-to-workspace O'
-
-# Google Meet
-[[on-window-detected]]
-    if.app-id = 'com.google.Chrome.app.kjgfgldnnfoeklkmfkjfagphfepbbdan'
     run = 'move-node-to-workspace O'
 
 [[on-window-detected]]
@@ -169,11 +164,24 @@ run = "layout floating"
     run = 'move-node-to-workspace O'
 
 ########################################
-# Application to Mac Display
+# Application to chat workspace
 ########################################
 [[on-window-detected]]
     if.app-id = 'com.tinyspeck.slackmacgap'
-    run = 'move-node-to-workspace A'
+    run = 'move-node-to-workspace C'
+
+########################################
+# Application to metting workspace
+########################################
+
+[[on-window-detected]]
+    if.app-id = 'us.zoom.xos'
+    run = 'move-node-to-workspace V'
+
+# Google Meet
+[[on-window-detected]]
+    if.app-id = 'com.google.Chrome.app.kjgfgldnnfoeklkmfkjfagphfepbbdan'
+    run = 'move-node-to-workspace V'
 
 ########################################
 # Other window
