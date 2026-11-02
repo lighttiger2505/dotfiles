@@ -524,8 +524,9 @@ alias lbre='lbox down && lbox build && lbox up -d'
 #####################################################################
 alias sbcc='sbx run claude'
 alias sbcw='sbx run claude -- --worktree'
-alias sbcl='sbx run --clone claude'
-alias sbclw='sbx run --clone claude -- --worktree'
+alias serun='sbx env run .'
+alias seplan='sbx env plan .'
+alias serm='sbx env rm'
 
 #####################################################################
 # Process management
