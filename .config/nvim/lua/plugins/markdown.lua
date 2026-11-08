@@ -67,6 +67,14 @@ return {
                 end,
             })
         end,
+        keys = {
+            {
+                "<leader>m",
+                "<Cmd>lua require('render-markdown').toggle()<CR>",
+                mode = "n",
+                desc = "RenderMarkdown toggle",
+            },
+        },
     },
 
     {
