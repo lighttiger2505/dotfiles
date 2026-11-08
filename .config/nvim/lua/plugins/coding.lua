@@ -104,24 +104,24 @@ return {
         event = "VeryLazy",
     },
 
-    {
-        "cbochs/grapple.nvim",
-        config = function()
-            local telescope = require("telescope")
-            telescope.load_extension("grapple")
-            require("grapple").setup({
-                scope = "git_branch",
-                icons = true,
-            })
-        end,
-        keys = {
-            {
-                "<Space>m",
-                "<Cmd>Telescope grapple tags<CR>",
-                mode = "n",
-                desc = "Telescope Find grapple tags",
-            },
-            { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
-        },
-    },
+    -- {
+    --     "cbochs/grapple.nvim",
+    --     config = function()
+    --         local telescope = require("telescope")
+    --         telescope.load_extension("grapple")
+    --         require("grapple").setup({
+    --             scope = "git_branch",
+    --             icons = true,
+    --         })
+    --     end,
+    --     keys = {
+    --         {
+    --             "<Space>m",
+    --             "<Cmd>Telescope grapple tags<CR>",
+    --             mode = "n",
+    --             desc = "Telescope Find grapple tags",
+    --         },
+    --         { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
+    --     },
+    -- },
 }
