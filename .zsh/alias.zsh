@@ -147,18 +147,11 @@ alias zc="rm -f ~/.zsh/*.zwc"
 #####################################################################
 # Vim
 #####################################################################
-# when not exist vim then start up vi
-if executable vim; then
-    alias vi=vim
-else
-    alias vim=vi
-fi
-
 # when not exist nvim then start up vim
 if executable nvim; then
+    alias v=nvim
+    alias vi=nvim
     alias vim=nvim
-else
-    alias nvim=vim
 fi
 
 alias vimdiff='vim -d'
