@@ -13,8 +13,8 @@ accordion-padding = 40
 # But the feature is very helpful.
 # Normalizations eliminate all sorts of weird tree configurations that don't make sense.
 # Give normalizations a chance and enable them back.
-enable-normalization-flatten-containers = false
-enable-normalization-opposite-orientation-for-nested-containers = false
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
 
 ########################################
 # Workspace to monitor
@@ -55,11 +55,6 @@ after-startup-command = [
     alt-cmd-shift-k = 'move up'
     alt-cmd-shift-l = 'move right'
 
-    # Consider using 'join-with' command as a 'split' replacement if you want to enable
-    # normalizations
-    alt-cmd-s = 'split horizontal'
-    alt-cmd-v = 'split vertical'
-
     alt-cmd-f = 'fullscreen'
 
     alt-cmd-slash = 'layout tiles horizontal vertical'
@@ -89,6 +84,7 @@ after-startup-command = [
     alt-cmd-m = 'workspace M'
     alt-cmd-o = 'workspace O'
     alt-cmd-a = 'workspace C'
+    alt-cmd-v = 'workspace V'
 
     alt-cmd-shift-1 = 'move-node-to-workspace 1'
     alt-cmd-shift-2 = 'move-node-to-workspace 2'
@@ -104,6 +100,7 @@ after-startup-command = [
     alt-cmd-shift-m = 'move-node-to-workspace M'
     alt-cmd-shift-o = 'move-node-to-workspace O'
     alt-cmd-shift-a = 'move-node-to-workspace C'
+    alt-cmd-shift-e = 'move-node-to-workspace V'
 
     alt-cmd-shift-c = 'reload-config'
 
@@ -134,12 +131,12 @@ after-startup-command = [
 #                 See:
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-    inner.horizontal = 16
-    inner.vertical =   16
-    outer.left =       16
-    outer.bottom =     8
-    outer.top =        8
-    outer.right =      16
+    inner.horizontal = 12
+    inner.vertical =   12
+    outer.left =       0
+    outer.bottom =     0
+    outer.top =        0
+    outer.right =      0
 
 [[on-window-detected]]
 if.app-id = "com.apple.finder"
@@ -184,12 +181,15 @@ run = "layout floating"
     run = 'move-node-to-workspace V'
 
 ########################################
-# Other window
+# Calender window
 ########################################
 [[on-window-detected]]
     if.app-id = 'com.rambox'
     run = 'move-node-to-workspace 1'
 
+########################################
+# AI agent window
+########################################
 [[on-window-detected]]
     if.app-id = 'com.openai.chat'
     run = 'move-node-to-workspace 2'
@@ -202,7 +202,20 @@ run = "layout floating"
     if.app-id = 'com.anthropic.claudefordesktop'
     run = 'move-node-to-workspace 2'
 
-
+########################################
+# Music window
+########################################
 [[on-window-detected]]
     if.app-id = 'com.spotify.client'
     run = 'move-node-to-workspace 3'
+
+########################################
+# Other Reference window
+########################################
+[[on-window-detected]]
+    if.app-id = 'com.electron.realtimeboard'
+    run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+    if.app-id = 'com.electron.asana'
+    run = 'move-node-to-workspace 4'
