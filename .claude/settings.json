@@ -84,6 +84,7 @@
       }
     }
   },
+  "outputStyle": "Concise",
   "language": "japanese",
   "spinnerVerbs": {
     "mode": "replace",
@@ -91,6 +92,6 @@
       "Working"
     ]
   },
-  "outputStyle": "Concise",
-  "defaultMode": "auto"
+  "defaultMode": "auto",
+  "model": "opus"
 }
