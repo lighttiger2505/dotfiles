@@ -5,6 +5,9 @@ typeset -U path
 path=(
 # nvim
 /opt/nvim/bin(N-/)
+# nix
+/etc/profiles/per-user/$USER/bin(N-/)
+/run/current-system/sw/bin(N-/)
 # mise
 $HOME/.local/share/mise/shims
 # brew
