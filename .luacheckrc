@@ -1,4 +1,7 @@
-read_globals = {
+globals = {
 	"vim",
+}
+
+read_globals = {
 	"Snacks",
 }
