@@ -51,7 +51,7 @@ workspaces = true
 ## which filter mode to use when atuin is invoked from a shell up-key binding
 ## the accepted values are identical to those of "filter_mode"
 ## leave unspecified to use same mode set in "filter_mode"
-filter_mode_shell_up_key_binding = "session"
+filter_mode_shell_up_key_binding = "global"
 
 ## which search mode to use when atuin is invoked from a shell up-key binding
 ## the accepted values are identical to those of "search_mode"
@@ -67,7 +67,7 @@ style = "compact"
 inline_height = 40
 
 ## Invert the UI - put the search bar at the top , Default to `false`
-invert = true
+invert = false
 
 ## enable or disable showing a preview of the selected command
 ## useful when the command is longer than the terminal width and is cut off
