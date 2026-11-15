@@ -7,6 +7,9 @@ fi
 
 if executable atuin; then
     eval "$(atuin init zsh)"
+    # atuin has no "down" widget, so both keys open the same search.
+    bindkey -M viins '^P' atuin-up-search-viins
+    bindkey -M viins '^N' atuin-up-search-viins
 fi
 
 if executable $HOME/.local/bin/mise; then
