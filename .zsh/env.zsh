@@ -38,4 +38,13 @@ case "$HOST" in
     ;;
 esac
 
+# Disable Copilot LSP in Neovim on hosts without GitHub Copilot access
+case "$HOST" in
+  PC-71285)
+    ;;
+  *)
+    export NVIM_DISABLE_COPILOT=1
+    ;;
+esac
+
 export TMUX_DEFAULT_SESSION="main"

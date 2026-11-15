@@ -73,11 +73,16 @@ return {
                     },
                 },
                 biome = {},
-                copilot = {},
                 jsonls = {},
+                copilot = {},
             },
         },
         config = function(_, opts)
+            -- Set NVIM_DISABLE_COPILOT=1 on machines without GitHub Copilot access
+            if vim.env.NVIM_DISABLE_COPILOT then
+                opts.servers.copilot = nil
+            end
+
             for server, config in pairs(opts.servers) do
                 config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
                 vim.lsp.config[server] = config
