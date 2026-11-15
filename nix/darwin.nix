@@ -20,6 +20,20 @@
     fi
   '';
 
+  # Enable dictation and start it by pressing the right Command key twice.
+  system.defaults.CustomUserPreferences = {
+    "com.apple.HIToolbox".AppleDictationAutoEnable = true;
+    "com.apple.assistant.support"."Dictation Enabled" = true;
+    "com.apple.symbolichotkeys".AppleSymbolicHotKeys."164" = {
+      enabled = true;
+      value = {
+        # 18446744073708503023 as unsigned 64-bit; Nix only has signed integers.
+        parameters = [ 1048592 (-1048593) ];
+        type = "modifier";
+      };
+    };
+  };
+
   # Homebrew itself must already be installed; nix-darwin only manages casks.
   homebrew = {
     enable = true;
