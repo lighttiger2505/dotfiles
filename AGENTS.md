@@ -9,6 +9,7 @@ Personal dotfiles repository for zsh, Neovim, and various tool configurations. N
 - `make deploy` — Symlinks all dotfiles and `.config/*` into `$HOME`. Review `Makefile` when adding new top-level dotfiles or config directories.
 - `make list` — Shows which files will be deployed.
 - `make linkdropbox` — Links Dropbox-backed vaults and memo directories.
+- `sudo darwin-rebuild switch --flake .` — Applies nix-darwin + home-manager config (`flake.nix`, `nix/`). Uses Determinate Nix, so `nix.enable = false`.
 
 ## Architecture notes
 
