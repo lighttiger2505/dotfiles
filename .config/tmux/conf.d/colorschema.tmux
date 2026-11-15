@@ -2,6 +2,9 @@
 # https://github.com/catppuccin/catppuccin
 set -g default-terminal "screen-256color"
 
+# tmux 3.8+: use terminal ANSI colours instead of the builtin light/dark theme
+set -s theme terminal
+
 set -g @my-color-rosewater "#f5e0dc"
 set -g @my-color-flamingo "#f2cdcd"
 set -g @my-color-pink "#f5c2e7"
@@ -45,6 +48,7 @@ setw -g window-status-bell-style "bg=#{@my-color-yellow},fg=#{@my-color-base}"
 setw -g pane-border-style "bg=#{@my-color-surface0},fg=#{@my-color-overlay0}"
 setw -g pane-active-border-style "bg=#{@my-color-lavender},fg=#{@my-color-base}"
 
+set -g popup-style "bg=default"
 set -g popup-border-style "fg=#{@my-color-red}"
 
 set -g pane-border-lines single
