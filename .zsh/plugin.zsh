@@ -57,3 +57,6 @@ load_plugin "zsh-completions"
 install_plugin "https://github.com/Aloxaf/fzf-tab"
 load_plugin "fzf-tab" "fzf-tab.plugin.zsh" "no_defer"
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+
+install_plugin "https://github.com/zsh-users/zsh-autosuggestions"
+load_plugin "zsh-autosuggestions"
