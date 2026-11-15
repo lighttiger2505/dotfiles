@@ -13,11 +13,14 @@ cd ~/src/github.com/lighttiger2505/dotfiles
 
 ### 2. Install Nix packages (nix-darwin + home-manager)
 
-Install [Determinate Nix](https://determinate.systems/nix-installer/) first.
+Install [Determinate Nix](https://determinate.systems/nix-installer/) and Homebrew first.
+
+Personal and work machines are defined as separate hosts in `flake.nix`.
+To support another machine, add an entry to `darwinConfigurations`.
 
 ```sh
-# First time
-sudo nix run nix-darwin -- switch --flake .#torano-ana
+# First time (use the host name defined in flake.nix)
+sudo nix run nix-darwin -- switch --flake .#<host>
 # After that
 sudo darwin-rebuild switch --flake .
 ```
