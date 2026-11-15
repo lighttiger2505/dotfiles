@@ -27,5 +27,7 @@
     tig
     rtk
     tmux
+    deja
+    zsh-patina
   ];
 }
