@@ -29,5 +29,6 @@ Personal dotfiles (zsh, Neovim, tmux, terminal emulators, Linux WMs, etc.), not 
 ## Conventions
 
 - Don't refactor or reformat existing config; match the existing style.
+- Commit directly to `master` by default; only create a feature branch for breaking changes.
 - `AGENTS.md` overlaps with this file; some of its details (e.g. `.claude/skills/`, named scripts) don't match what is committed, so verify before relying on them.
 - `dummy` (if present) is a socket file; leave it alone.
