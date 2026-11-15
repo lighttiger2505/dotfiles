@@ -37,10 +37,11 @@
   # Homebrew itself must already be installed; nix-darwin only manages casks.
   homebrew = {
     enable = true;
-    taps = [ "nikitabobko/tap" "camguillory/tap" ];
+    taps = [ "nikitabobko/tap" "camguillory/tap" "arto-app/tap" ];
     casks = [
       "nikitabobko/tap/aerospace"
       "camguillory/tap/audio-priority-bar"
+      "arto-app/tap/arto"
       "raycast"
       "rambox"
       "raindropio"
