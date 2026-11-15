@@ -30,6 +30,7 @@
     deja
     zsh-patina
     hackgen-nf-font
-    lig.packages.${pkgs.stdenv.hostPlatform.system}.default
+    # Upstream test detects_tty_descriptors needs a TTY, which the Nix sandbox lacks.
+    (lig.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs { doCheck = false; })
   ];
 }
