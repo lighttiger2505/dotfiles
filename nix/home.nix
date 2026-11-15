@@ -8,5 +8,24 @@
   # Keep this minimal; dotfiles are still deployed by `make deploy`.
   home.packages = with pkgs; [
     hello
+    ripgrep
+    stylua
+    lua-language-server
+    zoxide
+    atuin
+    sd
+    gh
+    delta
+    jq
+    fzf
+    shellcheck
+    worktrunk
+    bat
+    fd
+    ghq
+    eza
+    tig
+    rtk
+    tmux
   ];
 }
