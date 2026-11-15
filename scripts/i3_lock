@@ -1,4 +1,4 @@
-# vim: ft=sh
 #!/bin/sh
+# vim: ft=sh
 
 i3lock -t -i ~/.config/i3/lock-cat.png -c 282828

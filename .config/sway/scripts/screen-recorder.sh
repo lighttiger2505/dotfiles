@@ -1,5 +1,5 @@
-# vim: ft=sh
 #!/bin/sh
+# vim: ft=sh
 
 pid=`pgrep wf-recorder`
 status=$?
