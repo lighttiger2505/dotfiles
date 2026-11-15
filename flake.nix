@@ -11,9 +11,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lig = {
+      url = "github:KevenGoncalves/lig";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nix-darwin, home-manager, ... }: {
+  outputs = { nix-darwin, home-manager, lig, ... }: {
     darwinConfigurations."torano-ana" = nix-darwin.lib.darwinSystem {
       modules = [
         ./nix/darwin.nix
@@ -21,6 +25,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit lig; };
           home-manager.users.lighttiger2505 = import ./nix/home.nix;
         }
       ];

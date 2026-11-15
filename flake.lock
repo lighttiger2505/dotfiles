@@ -20,6 +20,26 @@
         "type": "github"
       }
     },
+    "lig": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794699842,
+        "narHash": "sha256-3O2rqB8hbA0n8jdN96EyZ8tAo96jkukFdDap5OL5nLo=",
+        "owner": "KevenGoncalves",
+        "repo": "lig",
+        "rev": "d347ee548f149d69850d1712fc9a9523a0c8d3e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "KevenGoncalves",
+        "repo": "lig",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -60,6 +80,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "lig": "lig",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs"
       }

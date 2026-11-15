@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lig, ... }:
 {
   # Do not change after the first switch.
   home.stateVersion = "26.11";
@@ -30,5 +30,6 @@
     deja
     zsh-patina
     hackgen-nf-font
+    lig.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
