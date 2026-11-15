@@ -3,7 +3,7 @@ EXCLUSIONS := .DS_Store .git .gitmodules .config .claude .claude-private .claude
 DOTFILES   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 CONFIGDIRS := $(wildcard ./.config/*)
 
-.PHONY: all list deploy clean linkdropbox mise-install lint lint-sh lint-zsh lint-lua lint-json lint-jsonc
+.PHONY: all list deploy clean linkdropbox mise-install lint lint-sh lint-zsh lint-lua lint-json lint-jsonc lint-nix
 
 all:
 
@@ -44,7 +44,7 @@ mise-install:
 	export MISE_GITHUB_TOKEN=$$(gh auth token) && mise install
 
 lint: ## Run all linters (keep going on failure)
-	@$(MAKE) -k --no-print-directory lint-sh lint-zsh lint-lua lint-json lint-jsonc
+	@$(MAKE) -k --no-print-directory lint-sh lint-zsh lint-lua lint-json lint-jsonc lint-nix
 
 lint-sh: ## Lint shell scripts with shellcheck
 	@echo '==> shellcheck'
@@ -65,3 +65,7 @@ lint-json: ## Validate JSON
 lint-jsonc: ## Validate JSONC
 	@echo '==> biome'
 	@biome format $$(git ls-files '*.jsonc') >/dev/null
+
+lint-nix: ## Check Nix syntax
+	@echo '==> nix-instantiate --parse'
+	@for f in $$(git ls-files '*.nix'); do nix-instantiate --parse $$f >/dev/null || exit 1; done
