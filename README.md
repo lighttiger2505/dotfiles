@@ -50,3 +50,12 @@ make linkdropbox
 make lint     # Run all linters
 make clean    # Remove symlinks created by `make deploy`
 ```
+
+### Update Nix packages
+
+```sh
+nix flake update                      # Update flake.lock (or `nix flake update nixpkgs` for one input)
+sudo darwin-rebuild switch --flake .  # Apply
+```
+
+To roll back, run `git checkout flake.lock` and switch again.
