@@ -29,5 +29,6 @@
     tmux
     deja
     zsh-patina
+    hackgen-nf-font
   ];
 }
