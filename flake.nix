@@ -17,18 +17,25 @@
     };
   };
 
-  outputs = { nix-darwin, home-manager, lig, ... }: {
-    darwinConfigurations."torano-ana" = nix-darwin.lib.darwinSystem {
-      modules = [
-        ./nix/darwin.nix
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit lig; };
-          home-manager.users.lighttiger2505 = import ./nix/home.nix;
-        }
-      ];
+  outputs = { nix-darwin, home-manager, lig, ... }:
+    let
+      mkHost = { username, system }: nix-darwin.lib.darwinSystem {
+        specialArgs = { inherit username system; };
+        modules = [
+          ./nix/darwin.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit lig; };
+            home-manager.users.${username} = import ./nix/home.nix;
+          }
+        ];
+      };
+    in {
+      darwinConfigurations = {
+        "torano-ana" = mkHost { username = "lighttiger2505"; system = "aarch64-darwin"; };
+        "PC-71285" = mkHost { username = "toshikazu.ohashi"; system = "aarch64-darwin"; };
+      };
     };
-  };
 }
