@@ -34,6 +34,17 @@
     };
   };
 
+  # Dock: scale effect, no magnification, no launch animation, no recent apps.
+  system.defaults.dock = {
+    mineffect = "scale";
+    magnification = false;
+    launchanim = false;
+    show-recents = false;
+  };
+
+  # Hide desktop widgets.
+  system.defaults.WindowManager.StandardHideWidgets = true;
+
   # Homebrew itself must already be installed; nix-darwin only manages casks.
   homebrew = {
     enable = true;
