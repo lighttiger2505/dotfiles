@@ -23,6 +23,7 @@
       "dropbox"
       "1password"
       "google-japanese-ime"
+      "claude"
     ];
   };
 
