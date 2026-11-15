@@ -27,6 +27,7 @@
     tig
     rtk
     tmux
+    neovim
     zsh-patina
     hackgen-nf-font
     # Upstream test detects_tty_descriptors needs a TTY, which the Nix sandbox lacks.
