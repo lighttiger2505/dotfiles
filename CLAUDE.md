@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-Personal dotfiles (zsh, Neovim, tmux, terminal emulators, Linux WMs, etc.), not an application. There is no build or test suite. Comments and READMEs must be written in English (personal OSS under `~/src/github.com/lighttiger2505`).
+Personal dotfiles (zsh, Neovim, tmux, terminal emulators, Linux WMs, etc.), not an application. There is no build or test suite (only `make lint`). Comments and READMEs must be written in English (personal OSS under `~/src/github.com/lighttiger2505`).
 
 ## Commands
 
@@ -13,6 +13,7 @@ Personal dotfiles (zsh, Neovim, tmux, terminal emulators, Linux WMs, etc.), not 
 - `make clean` — remove only symlinks that point back into this repo.
 - `make linkdropbox` — link Dropbox-backed vaults/memo dirs (macOS path).
 - `make mise-install` — `mise install` with a `gh` token.
+- `make lint` — run shellcheck, `zsh -n`, luacheck, jq (JSON) and biome (JSONC) on tracked files; `make lint-<sh|zsh|lua|json|jsonc>` runs a single check.
 - `sudo darwin-rebuild switch --flake .` — apply nix-darwin + home-manager (`flake.nix`, `nix/darwin.nix`, `nix/home.nix`). First time: `sudo nix run nix-darwin -- switch --flake .#torano-ana`. Uses Determinate Nix (`nix.enable = false`). Nix is intentionally minimal; dotfiles are still deployed by `make deploy`, not home-manager.
 
 ## Architecture

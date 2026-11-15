@@ -3,7 +3,7 @@ EXCLUSIONS := .DS_Store .git .gitmodules .config .claude .claude-private .claude
 DOTFILES   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 CONFIGDIRS := $(wildcard ./.config/*)
 
-.PHONY: all list deploy clean linkdropbox mise-install
+.PHONY: all list deploy clean linkdropbox mise-install lint lint-sh lint-zsh lint-lua lint-json lint-jsonc
 
 all:
 
@@ -42,3 +42,26 @@ linkdropbox:
 
 mise-install:
 	export MISE_GITHUB_TOKEN=$$(gh auth token) && mise install
+
+lint: ## Run all linters (keep going on failure)
+	@$(MAKE) -k --no-print-directory lint-sh lint-zsh lint-lua lint-json lint-jsonc
+
+lint-sh: ## Lint shell scripts with shellcheck
+	@echo '==> shellcheck'
+	@shellcheck $$(git ls-files '*.sh' 'scripts/*' .xinitrc .xprofile)
+
+lint-zsh: ## Check zsh syntax
+	@echo '==> zsh -n'
+	@for f in $$(git ls-files .zshrc .zshenv .zprofile '.zsh/*.zsh'); do zsh -n $$f || exit 1; done
+
+lint-lua: ## Lint Lua with luacheck (.luacheckrc)
+	@echo '==> luacheck'
+	@luacheck -q $$(git ls-files '*.lua')
+
+lint-json: ## Validate JSON
+	@echo '==> jq'
+	@for f in $$(git ls-files '*.json'); do jq empty $$f || exit 1; done
+
+lint-jsonc: ## Validate JSONC
+	@echo '==> biome'
+	@biome format $$(git ls-files '*.jsonc') >/dev/null
