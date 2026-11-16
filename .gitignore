@@ -21,3 +21,6 @@ lazy-lock.json
 # zsh compiled bytecode
 .zsh/*.zwc
 .zcompdump.zwc
+
+# atuin
+.atuin/logs
